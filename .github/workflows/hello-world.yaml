@@ -5,40 +5,40 @@ jobs:
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
-      - name: Clone
-        uses: actions/checkout@v2
-      - name: Upload a Build Artifact
+      - uses: actions/checkout@v2
+      - name: Upload Repo
         uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: code
           path: .
   
   my-second-job:
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
+    needs: my-job
     steps:
-      - name: download artifact
+      - name: Download code
         uses: actions/download-artifact@v2
         with:
-          name: my-artifact
+          name: code
           path: .
-      - name: add permission
-        run: chmod +x ./ci/build-app.sh
-      - name: Build
-        run: ./ci/build-app.sh
-    needs: my-job
+      - name: Build with Gradle
+        run: chmod +x ci/build-app.sh && ci/build-app.sh
+      - name: Upload Repo
+        uses: actions/upload-artifact@v2
+        with:
+          name: code
+          path: .
   
   my-third-job:
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
+    needs: my-job
     steps:
-      - name: download artifact
+      - name: Download code
         uses: actions/download-artifact@v2
         with:
-          name: my-artifact
+          name: code
           path: .
-      - name: add permission
-        run: chmod +x ./ci/unit-test-app.sh
-      - name: Test
-        run: ./ci/unit-test-app.sh
-    needs: my-job
+      - name: Test with Gradle
+        run: chmod +x ci/unit-test-app.sh && ci/unit-test-app.sh
