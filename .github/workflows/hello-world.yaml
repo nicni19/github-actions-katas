@@ -1,5 +1,8 @@
 name: hello-world
 on: push
+env:
+  docker_username: ${{ secrets.DOCKER_USERNAME }}
+  docker_password: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   Clone:
     runs-on: ubuntu-latest
@@ -40,3 +43,16 @@ jobs:
       - name: Test
         run: ./ci/unit-test-app.sh
     needs: Clone
+
+  Docker-image:
+    runs-on: ubuntu-latest
+    container: gradle:6-jdk11
+    needs: Build
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: .
+      - name: scripts
+        run: bash ./ci/build-docker.sh export GIT_COMMIT="GA-$GITHUB_SHA" && bash ci/push-docker.sh export GIT_COMMIT="GA-$GITHUB_SHA"
