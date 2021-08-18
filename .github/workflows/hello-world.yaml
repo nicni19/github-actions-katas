@@ -18,14 +18,14 @@ jobs:
     container: gradle:6-jdk11
     steps:
       - name: add permission
-        run: chmod -x ci/build-app.sh
+        run: chmod -x ./ci/build-app.sh
       - name: download artifact
         uses: actions/download-artifact@v2
         with:
           name: my-artifact
           path: .
       - name: Build
-        run: ci/build-app.sh
+        run: ./ci/build-app.sh
     needs: my-job
   
   my-third-job:
@@ -33,12 +33,12 @@ jobs:
     container: gradle:6-jdk11
     steps:
       - name: add permission
-        run: chmod -x ci/build-app.sh
+        run: chmod -x ./ci/build-app.sh
       - name: download artifact
         uses: actions/download-artifact@v2
         with:
           name: my-artifact
           path: .
       - name: Test
-        run: ci/unit-test-app.sh
+        run: ./ci/unit-test-app.sh
     needs: my-job
