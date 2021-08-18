@@ -28,6 +28,11 @@ jobs:
           path: .
       - name: Build
         run: bash ci/build-app.sh
+      - name: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: .
   
   Test:
     runs-on: ubuntu-latest
