@@ -37,3 +37,4 @@ jobs:
           path: .
       - name: Test
         run: ci/unit-test-app.sh
+    needs: my-job
