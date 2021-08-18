@@ -6,7 +6,7 @@ jobs:
     container: gradle:6-jdk11
     steps:
       - name: Clone
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
   
   my-second-job:
     runs-on: ubuntu-latest
