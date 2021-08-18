@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
+      - name: add permission
+        run: chmod -x ci/build-app.sh
       - name: download artifact
         uses: actions/download-artifact@v2
         with:
@@ -30,6 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
+      - name: add permission
+        run: chmod -x ci/build-app.sh
       - name: download artifact
         uses: actions/download-artifact@v2
         with:
