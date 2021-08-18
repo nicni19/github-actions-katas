@@ -57,6 +57,6 @@ jobs:
           name: my-artifact
           path: .
       - name: build
-        run: bash ./ci/build-docker.sh export GIT_COMMIT="GA-$GITHUB_SHA"
+        run: bash ./ci/build-docker.sh
       - name: push
         run: bash ci/push-docker.sh export GIT_COMMIT="GA-$GITHUB_SHA"
